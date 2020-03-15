@@ -1,0 +1,148 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ _('Index') }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="display-4">Dashboard</h1>
+        <hr>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12" style="margin-top: 10px;">
+                <div class="card text-center bg-primary text-white" title="{{ _('Users') }}">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <h2 class="card-title"><i class="material-icons" style="font-size: larger">people</i>
+                                </h2>
+                                <p class="card-text">
+                                <h1>{{ User.query.count() }}</h1> <h5>Users</h5>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12" style="margin-top: 10px;">
+                <div class="card text-center bg-success text-white" title="{{ _('Books') }}">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <h2 class="card-title"><i class="material-icons" style="font-size: larger">book</i></h2>
+                                <p class="card-text">
+                                <h1>{{ Book.query.count() }}</h1> <h5>Books</h5>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12" style="margin-top: 10px;">
+                <div class="card text-center bg-warning text-white" title="{{ _('Comments') }}">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <h2 class="card-title"><i class="material-icons" style="font-size: larger">comment</i>
+                                </h2>
+                                <p class="card-text">
+                                <h1>{{ Comment.query.count() }}</h1> <h5>Comments</h5>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br id="account">
+        <hr>
+        <h2>{{ _('Account Information') }}</h2>
+        <br>
+        <h5>{{ _('Current user: %(username)s', username=current_user.username) }}</h5><br>
+        <p>{{ _('Email: <a href="mailto:%(email)s">%(email)s</a>', email=current_user.email) }}</p>
+        <p>{{ _('Comments Published: %(comments)d', comments=current_user.comments.all() | length) }}</p>
+        <p>{{ _('Role: %(role)s', role=current_user.role.name) }}</p>
+        <br id="site-wide">
+        <hr>
+        <h2>{{ _('Site-wide Information') }}</h2>
+        <br>
+        <h5>{{ _('Website Status') }}</h5><br>
+        <p id="domain"></p>
+        {% if config.DEBUG %}{% set debug='On' %}{% else %}{% set debug='Off' %}{% endif %}
+        <p>{{ _('Debug Mode: %(debug)s', debug=debug) }}</p>
+        <p>{{ _('In %(users)d users registered, there are %(admin)d admin users and %(normal)d normal users.', users=User.query.count(), admin=User.query.filter_by(role_id=2).all() | length, normal=User.query.filter_by(role_id=1).all() | length) }}</p>
+        <p class="text-success">{{ _('All system functions are up and normal.') }}</p>
+        <script>
+            document.getElementById("domain").innerHTML = "{{ _('Site URL: ') }}" + document.domain;
+        </script>
+        <br>
+        <h5>{{ _('User Status') }}</h5><br>
+        <table class="table table-striped table-responsive-sm">
+            <caption>Total: {{ User.query.count() }}</caption>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ _('Username') }}</th>
+                <th scope="col">{{ _('Email') }}</th>
+                <th scope="col">{{ _('Comments') }}</th>
+                <th scope="col">{{ _('Role') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in User.query.all() %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ user.username }}</td>
+                    <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                    <td>{{ user.comments.count() }}</td>
+                    <td>{{ user.role.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h5>{{ _('Book Status') }}</h5><br>
+        <table class="table table-striped table-responsive-sm">
+            <caption>Total: {{ Book.query.count() }}</caption>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ _('Title') }}</th>
+                <th scope="col">{{ _('Description') }}</th>
+                <th scope="col">{{ _('Comments') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in Book.query.all() %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.des | truncate(length=50) }}</td>
+                    <td>{{ book.comments.all() | length }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h5>{{ _('Comment Status') }}</h5><br>
+        <table class="table table-striped table-responsive-sm">
+            <caption>Total: {{ Comment.query.count() }}</caption>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ _('Author') }}</th>
+                <th scope="col">{{ _('Book') }}</th>
+                <th scope="col">{{ _('Body') }}</th>
+                <th scope="col">{{ _('Date Published') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comment in Comment.query.all() %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ comment.author.username }}</td>
+                    <td>{{ comment.book.title }}</td>
+                    <td>{{ comment.body | truncate(length=50) }}</td>
+                    <td>{{ moment(comment.timestamp).format('YYYY-MM-DD') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

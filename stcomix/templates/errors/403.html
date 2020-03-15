@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}403 - STComix{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='csshake/docs/csshake.css') }}">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h1 class="text-center text-primary shake-constant shake-opacity display-1">403</h1>
+            </div>
+            <div class="col-8 mt-4">
+                <p>{{ _('<p class="text-muted">That\'s an error.</p><p class="text-dark">The requested URL %(path)s is either read-protected or not readable by the server.</p><strong class="text-muted" style="white-space:nowrap;">That\'s all we know.</strong>', path=request.path) }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

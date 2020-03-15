@@ -1,0 +1,23 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ _('Change Avatar') }}{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <div class="container">
+        <h1 class="display-4">{{ _('Upload Avatar') }}</h1>
+        <hr>
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="file" style="width: 0;height: 0" onchange="loadFile(this.files[0])"><br>
+            <label class="btn btn-outline-primary" for="file">{{ _('Upload') }}</label>
+            <label id="filePos">No files selected</label>
+            <br>
+            <button type="submit" class="btn btn-success">{{ _('Submit') }}</button>
+        </form>
+        <script>
+            function loadFile(file) {
+                $("#filePos").html(file.name);
+            }
+        </script>
+    </div>
+{% endblock %}

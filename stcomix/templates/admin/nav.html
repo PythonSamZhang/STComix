@@ -1,0 +1,31 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ _('Navigation') }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="display-4">{{ _('Navigation') }}</h1>
+        <hr>
+        <ul class="nav flex-column">
+            <li>{{ render_nav_item('admin.index', _('Dashboard')) }}</li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">
+            <span>{{ _('Books') }}</span>
+        </h6>
+        <ul class="nav flex-column">
+            <li>{{ render_nav_item('admin.new_book', _('New Book')) }}</li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">
+            <span>{{ _('Blog') }}</span>
+        </h6>
+        <ul class="nav flex-column">
+            <li>{{ render_nav_item('admin.new_blog', _('New Blog')) }}</li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">
+            <span>{{ _('Others') }}</span>
+        </h6>
+        <ul class="nav flex-column">
+            <li>{{ render_nav_item('admin.change_avatar', _('Change Avatar')) }}</li>
+        </ul>
+    </div>
+{% endblock %}

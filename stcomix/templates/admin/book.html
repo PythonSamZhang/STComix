@@ -1,0 +1,59 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ _('Books') }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="display-4">{{ _('Books') }} <small class="text-muted">{{ books | length }}</small></h1>
+        <hr>
+        <table class="table table-striped table-responsive-sm">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ _('Title') }}</th>
+                <th scope="col">{{ _('Description') }}</th>
+                <th scope="col">{{ _('Comments') }}</th>
+                <th scope="col">{{ _('Actions') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td><a href="{{ url_for('main.book_view', id=book.id) }}">{{ book.title }}</a></td>
+                    <td>{{ book.des | truncate(length=50) }}</td>
+                    <td>{{ book.comments.all() | length }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.edit_book', id=book.id) }}"><i class="material-icons"
+                                                                                  title="{{ _('Edit') }}">mode_edit</i></a>
+                        <a href="#" onclick="$('#delete-{{ book.id }}').modal('show')" data-toggle="model"
+                           data-target="#delete-{{ book.id }}"><i class="material-icons" title="{{ _('Delete') }}">delete</i></a>
+                        <div class="modal fade" id="delete-{{ book.id }}" tabindex="-1" role="dialog"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">{{ _('Are you sure?') }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ _('Are you sure that you want to delete book "%(title)s"? You can\'t undo this action!', title=book.title) }}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">{{ _('Cancel') }}</button>
+                                        <a type="button" class="btn btn-danger"
+                                           href="{{ url_for('admin.delete_book', id=book.id) }}">{{ _('Delete') }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

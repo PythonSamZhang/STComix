@@ -1,0 +1,39 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ _('Comment posted by %(username)s', username=comment.author.username) }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="display-4">{{ _('Edit Comment') }}</h1>
+        <hr>
+        <form method="post" class="needs-validation" novalidate>
+            <label for="inputBody" class="sr-only">{{ _('Comment Body') }}</label>
+            <input value="{{ comment.body }}" type="text" id="inputBody" name="body" class="form-control"
+                   placeholder="{{ _('Comment Body') }}"
+                   required>
+            <div class="invalid-feedback">{{ _('Please enter the comment body') }}</div>
+            <br>
+            <button type="submit" class="btn btn-primary">{{ _('Submit') }}</button>
+        </form>
+    </div>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+{% endblock %}

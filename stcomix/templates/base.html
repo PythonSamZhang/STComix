@@ -1,0 +1,116 @@
+{% from 'bootstrap/nav.html' import render_nav_item %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="{{ url_for('static', filename='favicons/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{{ url_for('static', filename='favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="{{ url_for('static', filename='favicons/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicons/site.webmanifest') }}">
+    <link href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='animate.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='Hover/css/hover.css') }}" rel="stylesheet">
+    <title>{% block title %}STComix{% endblock %}</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/">STComix</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                {{ render_nav_item('main.index', _('Home')) }}
+                {{ render_nav_item('main.books_view', _('Books')) }}
+                {{ render_nav_item('main.blog', _('Blog')) }}
+            </ul>
+            {% if current_user.is_authenticated %}
+                <ul class="navbar-nav dropdown mr-sm-2">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Hi, {{ current_user.username }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        {% if current_user.is_admin() %}
+                            <a class="dropdown-item" href="{{ url_for('admin.index') }}">{{ _('Administartion') }}</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a>
+                    </div>
+                </ul>
+            {% else %}
+                <ul class="navbar-nav mr-sm-2">
+                    {{ render_nav_item('auth.login', _('Login')) }}
+                    {{ render_nav_item('auth.register', _('Register')) }}
+                </ul>
+            {% endif %}
+        </div>
+    </nav>
+    <div aria-live="polite" aria-atomic="true" style="z-index: 999; position: relative;">
+        <div style="position: absolute; top: 0; right: 0; margin-top: 30px;">
+            {% for title, message in get_flashed_messages(with_categories=True) %}
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false"
+                     style="margin-right: 50px; z-index: auto;">
+                    <div class="toast-header">
+                        <strong class="mr-auto">{{ title }}</strong>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        {{ message | safe | wordwrap }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</header>
+{% block content %}
+    <br><br>
+{% endblock %}
+<a class="btn btn-primary rounded material-icons" href="#"
+   style="position: fixed;bottom: 30px;right: 30px;display: none;" id="btn_top" title="{{ _('Back to top') }}"
+   onclick="$('html,body').animate({ scrollTop: 0 }, 500);">keyboard_arrow_up</a>
+<!-- FOOTER -->
+<footer class="container">
+    <br>
+    <hr>
+    &copy; 2020 STComix &middot; <a href="#">About</a> &middot; <a href="{{ url_for('main.blog') }}">Blog</a> &middot;
+    <a
+            href="https://github.com/PythonSamZhang"
+            target="_blank"
+            title="Fork me on Github">Github</a>
+    <p class="float-right">We make comic books, and we only make the good ones.</p>
+</footer>
+{{ bootstrap.load_js() }}
+{{ moment.include_moment() }}
+<script>
+    $('.toast').toast('show');
+    $(function () {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= 300) {
+                $('#btn_top').fadeIn();
+            } else {
+                $('#btn_top').fadeOut();
+            }
+        });
+    });
+</script>
+<script src="{{ url_for('static', filename='bs-custom-file-input.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        bsCustomFileInput.init()
+    })
+</script>
+</body>
+</html>

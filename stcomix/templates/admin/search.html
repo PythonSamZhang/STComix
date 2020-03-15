@@ -1,0 +1,19 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ _('Search Results') }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="display-4">Search Results <small class="text-muted">{{ results | length }}</small></h1>
+        <hr>
+        {% if results %}
+            {% for result in results %}
+                <h5><a href="{{ url_for(result.link) }}" title="{{ result.name }}">{{ result.name }}</a></h5>
+                <p>{{ result.des }}</p>
+                <hr>
+            {% endfor %}
+        {% else %}
+            <p>{{ _('No search results') }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

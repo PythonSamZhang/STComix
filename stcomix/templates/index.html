@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}STComix{% endblock %}
+
+{% block content %}
+    <main role="main">
+        <div id="myCarousel" class="carousel slide animated bounceInDown" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="background: #5a5a5a">
+                    <img src="{{ url_for('static', filename='cro-bg-1.jpg') }}" width="100%" height="100%">
+                    <div class="container">
+                        <div class="carousel-caption text-left">
+                            <h1>{{ _('All Great Comic Books. In Here.') }}</h1>
+                            <p>{{ _('Join STComix today and read our comic books, with lots of laughter. Comic books
+                                are now available on our website!') }}</p>
+                            <p><a class="btn btn-lg btn-primary" href="{{ url_for('auth.register') }}" role="button">Sign
+                                up today</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background: #5a5a5a">
+                    <img src="{{ url_for('static', filename='cro-bg-2.jpg') }}" width="100%" height="100%">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>{{ _('Not Happy? Come Here.') }}</h1>
+                            <p>{{ _('We provide the funniest comic books in the world! Read one of it and you can\'t
+                                be unhappy for a day!') }}</p>
+                            <p><a class="btn btn-lg btn-primary" href="{{ url_for('main.books_view') }}" role="button">Try
+                                our books</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="background: #5a5a5a">
+                    <img src="{{ url_for('static', filename='cro-bg-3.jpg') }}" width="100%" height="100%">
+                    <div class="container">
+                        <div class="carousel-caption text-right">
+                            <h1>{{ _('Finally, it\'s FREE!') }}</h1>
+                            <p>{{ _('No paying, no credit cards, no money required! Read our books for free and feel
+                                free to leave comments!') }}</p>
+                            <p><a class="btn btn-lg btn-primary" href="{{ url_for('auth.register') }}" role="button">Register
+                                now</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+
+        <!-- Marketing messaging and featurettes
+        ================================================== -->
+        <!-- Wrap the rest of the page in another container to center all the content. -->
+
+        <div class="container marketing">
+            <h3 style="text-align: center;"><p>{{ _('Meet Our Authors') }}</p></h3>
+            <!-- Three columns of text below the carousel -->
+            <div class="row">
+                <div class="col-lg-4 hvr-bob hvr-float-shadow">
+                    <img src="{{ url_for('static', filename='profiles/tom.jpg') }}" width="140" height="140"
+                         class="rounded-circle" style="background: #5a5a5a">
+                    <br><br>
+                    <h2><p>Tom</p></h2>
+                    <p>{{ _('Drawer and writer of STComix. He and Sam founded the company. He loves to draw pictures and
+                        he can draw very well. He drew pictures for the first ones of our comic books.') }}</p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4 hvr-bob hvr-float-shadow">
+                    <img src="{{ url_for('static', filename='profiles/sam.jpg') }}" width="140" height="140"
+                         class="rounded-circle" style="background: #5a5a5a">
+                    <br><br>
+                    <h2><p>Sam</p></h2>
+                    <p>{{ _('Main founder and writer of STComix. He wrote most of the comic books with the help
+                        of Tom and Alice. He also likes coding, so he made this website for the company. Email
+                        him at <a href="mailto:samzhang951@outlook.com">samzhang951@outlook.com</a>!') }}</p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4 hvr-bob hvr-float-shadow">
+                    <img src="{{ url_for('static', filename='profiles/alice.jpg') }}" width="140" height="140"
+                         class="rounded-circle" style="background: #5a5a5a">
+                    <br><br>
+                    <h2><p>Alice</p></h2>
+                    <p>{{ _('Main drawer of STComix. She loves comix and joined us during we are just founded.
+                        She drew great comic books and everyone liked it. She also loves to read comic books
+                        as another hobby besides drawing.') }}</p>
+                </div><!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+
+
+            <!-- START THE FEATURETTES -->
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading">{{ _('Funny') }} &middot; <span
+                            class="text-muted">{{ _('We can make you laugh for hours') }}</span></h2>
+                    <p class="lead">{{ _('When you are unhappy, sad, or mad, try to read some of our books!
+                        We promise you won\'t be unhappy again for hours!') }}</p>
+                </div>
+                <div class="col-md-5">
+                    <img src="{{ url_for('static', filename='ico.jpg') }}" width="100%" height="100%"
+                         style="background: #5a5a5a" class="rounded">
+
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7 col-sm-12 order-md-2">
+                    <h2 class="featurette-heading">{{ _('We also provide great comic') }} &middot; <span
+                            class="text-muted">{{ _('See for yourself') }}</span></h2>
+                    <p class="lead">{{ _('Tired of a day\'s work? Look at our comix and you\'ll feel much more
+                        relaxed. Believe me, it\'s the best one you\'ve ever read!') }}</p>
+                </div>
+                <div class="col-md-5 col-sm-1 order-md-1">
+                    <img src="{{ url_for('static', filename='ico.jpg') }}" width="100%" height="100%"
+                         style="background: #5a5a5a" class="rounded">
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading">{{ _('Join us for free') }} &middot; <span
+                            class="text-muted">{{ _('Register now') }}</span></h2>
+                    <p class="lead">{{ _('Are you in the mood to read our comix? Join us now and read for free!
+                        <a href="/auth/register">Click here</a> to register an account!') }}</p>
+                </div>
+                <div class="col-md-5">
+                    <img src="{{ url_for('static', filename='ico.jpg') }}" width="100%" height="100%"
+                         style="background: #5a5a5a" class="rounded">
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

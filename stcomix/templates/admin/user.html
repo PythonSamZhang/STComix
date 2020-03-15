@@ -1,0 +1,61 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ _('Users') }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="display-4">{{ _('Users') }} <small class="text-muted">{{ users | length }}</small></h1>
+        <hr>
+        <table class="table table-striped table-responsive-sm">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ _('Username') }}</th>
+                <th scope="col">{{ _('Email') }}</th>
+                <th scope="col">{{ _('Comments') }}</th>
+                <th scope="col">{{ _('Role') }}</th>
+                <th scope="col">{{ _('Actions') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ user.username }}</td>
+                    <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                    <td>{{ user.comments.count() }}</td>
+                    <td>{{ user.role.name }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.edit_user', id=user.id) }}"><i class="material-icons"
+                                                                                  title="{{ _('Edit') }}">mode_edit</i></a>
+                        <a href="#" onclick="$('#delete-{{ user.id }}').modal('show')" data-toggle="model"
+                           data-target="#delete-{{ user.id }}"><i class="material-icons" title="{{ _('Delete') }}">delete</i></a>
+                        <div class="modal fade" id="delete-{{ user.id }}" tabindex="-1" role="dialog"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">{{ _('Are you sure?') }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ _('Are you sure that you want to delete user "%(username)s"? You can\'t undo this action!', username=user.username) }}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">{{ _('Cancel') }}</button>
+                                        <a type="button" class="btn btn-danger"
+                                           href="{{ url_for('admin.delete_user', id=user.id) }}">{{ _('Delete') }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

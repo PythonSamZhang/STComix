@@ -1,0 +1,98 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ _('New Blog') }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="display-4">{{ _('New Blog') }}</h1>
+        <hr>
+        <div class="container">
+            <form method="post" class="needs-validation" novalidate>
+                <input class="form-control" placeholder="{{ _('Title') }}" name="title" id="title" autofocus required>
+                <div class="invalid-feedback">{{ _('Please enter the blog title!') }}</div>
+                <br>
+                <textarea class="editor" name="editor" id="editor" required></textarea>
+                <div class="invalid-feedback">{{ _('Please enter the blog body!') }}</div>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+    <script src="{{ url_for('static', filename='ckeditor/build/ckeditor.js') }}"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('.editor'), {
+
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'imageUpload',
+                        '|',
+                        'indent',
+                        'outdent',
+                        '|',
+                        'blockQuote',
+                        'insertTable',
+                        'undo',
+                        'redo',
+                        'alignment'
+                    ]
+                },
+                language: 'en',
+                image: {
+                    toolbar: [
+                        'imageTextAlternative',
+                        'imageStyle:full',
+                        'imageStyle:side'
+                    ]
+                },
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells'
+                    ]
+                },
+                ckfinder: {
+                    uploadUrl: "{{ url_for('admin.upload_blog', _external=True) }}"
+                },
+                licenseKey: '',
+
+            })
+            .then(editor => {
+                window.editor = editor;
+
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+{% endblock %}

@@ -1,0 +1,151 @@
+{% from 'bootstrap/nav.html' import render_nav_item %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="{{ url_for('static', filename='favicons/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{{ url_for('static', filename='favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="{{ url_for('static', filename='favicons/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicons/site.webmanifest') }}">
+    <link href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+
+    <title>{% block title %}{% endblock %} - {{ _('STComix Administration') }}</title>
+</head>
+<body>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand mr-auto mr-lg-0 mr-0 col-10 col-lg-2 "
+       href="{{ url_for('admin.index') }}">{{ _('STComix Administration') }}</a>
+    <button class="d-lg-none navbar-toggler border-0 col-2 align-self-center rounded-0" type="button"
+            data-toggle="offcanvas" style="height: 48px; background-color: rgba(0, 0, 0, .25);">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <form method="post" action="{{ url_for('admin.search') }}" class="w-100 d-none d-md-block ">
+        <input name="q" class="d-none d-md-block  form-control form-control-dark w-100" type="search"
+               placeholder="{{ _('Search') }}" aria-label="Search">
+    </form>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/">{{ _('Go back to site') }}</a>
+        </li>
+    </ul>
+
+    <div class="navbar-collapse offcanvas-collapse d-lg-none" id="navbarsExampleDefault">
+        <div class="sidebar-sticky">
+            <form method="post" action="{{ url_for('admin.search') }}" class="w-100">
+                <input name="q" class="form-control form-control-dark w-100" type="search"
+                       placeholder="{{ _('Search') }}" aria-label="Search">
+            </form>
+            <p></p>
+            <ul class="nav flex-column">
+                <li>{{ render_nav_item('admin.index', _('Dashboard')) }}</li>
+            </ul>
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>{{ _('Books') }}</span>
+            </h6>
+            <ul class="nav flex-column">
+                <li>{{ render_nav_item('admin.new_book', _('New Book')) }}</li>
+            </ul>
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>{{ _('Blog') }}</span>
+            </h6>
+            <ul class="nav flex-column">
+                <li>{{ render_nav_item('admin.new_blog', _('New Blog')) }}</li>
+            </ul>
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>{{ _('Management') }}</span>
+            </h6>
+            <ul class="nav flex-column">
+                <li>{{ render_nav_item('admin.user', _('Users')) }}</li>
+            </ul>
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>{{ _('Others') }}</span>
+            </h6>
+            <ul class="nav flex-column">
+                <li>{{ render_nav_item('admin.change_avatar', _('Change Avatar')) }}</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li>{{ render_nav_item('admin.index', _('Dashboard')) }}</li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>{{ _('Blog') }}</span>
+                </h6>
+                <ul class="nav flex-column">
+                    <li>{{ render_nav_item('admin.new_blog', _('New Blog')) }}</li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>{{ _('Management') }}</span>
+                </h6>
+                <ul class="nav flex-column">
+                    <li>{{ render_nav_item('admin.user', _('Users')) }}</li>
+                    <li>{{ render_nav_item('admin.book', _('Books')) }}</li>
+                    <li>{{ render_nav_item('admin.comment', _('Comments')) }}</li>
+                    <li>{{ render_nav_item('admin.new_book', _('New Book')) }}</li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>{{ _('Account') }}</span>
+                </h6>
+                <ul class="nav flex-column">
+                    <li>{{ render_nav_item('admin.change_avatar', _('Change Avatar')) }}</li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <br>
+            {% for category, message in get_flashed_messages(with_categories=True) %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+            <br>
+            {% block content %}
+            {% endblock %}
+            <br>
+            <footer>
+                <br>
+                <hr>
+                <div class="container">
+                    &copy; 2020 STComix &middot; <a href="#">About</a> &middot; <a href="{{ url_for('main.blog') }}">Blog</a>
+                    &middot;
+                    <a href="https://github.com/PythonSamZhang"
+                       target="_blank"
+                       title="Fork me on Github">Github</a>
+                    <p class="float-right">We make comic books, and we only make the good ones.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+</div>
+{{ bootstrap.load_js() }}
+{{ moment.include_moment() }}
+<script>
+    $('.toast').toast('show');
+    $(function () {
+        'use strict';
+
+        $('[data-toggle="offcanvas"]').on('click', function () {
+            $('.offcanvas-collapse').toggleClass('open')
+        })
+    })
+</script>
+</body>
+</html>

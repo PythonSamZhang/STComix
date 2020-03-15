@@ -1,0 +1,4 @@
+/venv/*
+*.h2.db
+/migrations/*
+*.pyc

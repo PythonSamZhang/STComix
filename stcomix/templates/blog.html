@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/pagination.html' import render_pager %}
+
+{% block title %}{{ _('Blog') }} - STComix{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <style>
+        .hover-blue :hover {
+            background: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+    </style>
+    <div class="container">
+        <h1>{{ _('STComix Blog') }}</h1>
+        <hr>
+        {% if posts %}
+            <ul class="list-unstyled">
+                {% for post in posts %}
+                    <div class="media">
+                        <img title="{{ post.author.username }}"
+                             src="{{ url_for('static', filename='uploads/avatars/'+post.author.avatar_l) }}"
+                             class="mr-3 rounded-circle img-fluid" style="height: 44px;"
+                             alt="{{ post.author.username }}">
+                        <div class="media-body">
+                            <h5 class="mt-0"><a href="{{ url_for('main.view_blog', id=post.id) }}">{{ post.title }}</a>
+                                <small><small class="font-weight-light">
+                                    &middot; {{ moment(post.timestamp).format('YYYY-M-D') }} |
+                                    By {{ post.author.username }}</small></small></h5>
+                            {{ post.body | striptags | truncate(length=400) }}
+                        </div>
+                    </div><br><br>
+                {% endfor %}
+            </ul>
+            <br><br>
+            {{ render_pager(pagination=pagination, prev='&larr; Older' | safe, next='Newer &rarr;' | safe, align='center') }}
+        {% else %}
+            <p>There's no posts yet!</p>
+        {% endif %}
+    </div>
+{% endblock %}

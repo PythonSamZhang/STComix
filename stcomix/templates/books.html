@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ _('Books') }}{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <div class="container">
+        <h1>Our Books</h1>
+        <hr>
+        {% if books %}
+            <div class="row">
+                {% for book in books %}
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="card mb-3">
+                            <div class="row no-gutters">
+                                <div class="col-md-4 col-sm-4">
+                                    <img src="{{ url_for('static', filename='uploads/books/'+book.title+'/'+'1.jpg') }}"
+                                         class="img-card-left img-fluid"
+                                         alt="{{ _('Book Cover - %(title)s', title=book.title) }}"">
+                                </div>
+                                <div class="col-md-8 col-sm-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ book.title }}</h5>
+                                        <p class="card-text">{{ book.des }}</p>
+                                        <a href="{{ url_for('main.book_view', id=book.id) }}" class="btn btn-primary"
+                                           style="bottom: -10px; position: relative">{{ _('Start Reading') }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>{{ _('There\'s no books yet! Wait for a few moments and then come back to check it out!') }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

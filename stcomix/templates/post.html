@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - STComix{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='ckeditor-content.css') }}" rel="stylesheet">
+    <div class="container" style="overflow: hidden">
+        <h1>{{ post.title }}</h1>
+        <p class="font-weight-light">By <a data-placement="bottom" data-toggle="popover">{{ post.author.username }}</a>
+            &middot; {{ moment(post.timestamp).format('YYYY-M-D') }}</p>
+        <hr>
+        <div class="ck-content">
+            {{ post.body | safe }}
+        </div>
+    </div>
+    {{ bootstrap.load_js() }}
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover(
+                {
+                    html: true,
+                    trigger: 'hover',
+                    placement: 'auto',
+                    title: '{{ post.author.username }}',
+                    content: '<img src="{{ url_for('static', filename='uploads/avatars/'+post.author.avatar_m) }}" class="rounded-circle"> {{ post.author.username }} <span class="badge badge-primary">{{ _('Author') }}</span>'
+                }
+            )
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ book.title }} - STComix{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <div class="container">
+        <h1>{{ book.title }}</h1>
+        <hr>
+        <div class="row">
+            {% if current_user.is_authenticated %}
+                {% for i in pages %}
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <img class="img-fluid rounded"
+                             src="{{ url_for('static', filename='uploads/books/'+book.title+'/'+i|string+'.jpg') }}"
+                             alt="{{ _('Hmm... This page is missing! Contact the admin to report this problem. Page num: %(i)d', i=i) | safe }}">
+                    </div>
+                {% endfor %}
+                <div class="container">
+                    <hr>
+                    <h5 id="comments">{{ _('Comments') }}</h5>
+                    <p></p>
+                    {% if comments %}
+                        <ul class="list-unstyled">
+                            {% for comment in comments %}
+                                <div class="media">
+                                    <img title="{{ comment.author.username }}"
+                                         src="{{ url_for('static', filename='uploads/avatars/'+comment.author.avatar_l) }}"
+                                         class="mr-3 rounded-circle img-fluid" style="height: 44px;"
+                                         alt="{{ comment.author.username }}">
+                                    <div class="media-body">
+                                        {{ comment.author.username }}
+                                        <small class="font-weight-light">
+                                            {{ _('published this on %(date)s', date=moment(comment.timestamp).format('YYYY-M-D')) }}
+                                        </small><br>
+                                        {{ comment.body }}
+                                    </div>
+                                </div><br>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>{{ _('No comments yet! Publish one now!') }}</p>
+                    {% endif %}
+                    <form method="post">
+                        <label for="comment">{{ _('Please enter your comment') }}</label>
+                        <input class="form-control" name="comment" id="comment" placeholder="Comment" required><br>
+                        <button class="btn btn-primary" type="submit">{{ _('Submit') }}</button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <img class="img-fluid rounded"
+                         src="{{ url_for('static', filename='uploads/books/'+book.title+'/1.jpg') }}"
+                         alt="{{ _('Hmm... This page is missing! Contact the admin to report this problem. Page num: %(i)d', i=1) | safe }}">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <img class="img-fluid rounded"
+                         src="{{ url_for('static', filename='uploads/books/'+book.title+'/2.jpg') }}"
+                         alt="{{ _('Hmm... This page is missing! Contact the admin to report this problem. Page num: %(i)d', i=2) | safe }}">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <img class="img-fluid rounded"
+                         src="{{ url_for('static', filename='uploads/books/'+book.title+'/3.jpg') }}"
+                         alt="{{ _('Hmm... This page is missing! Contact the admin to report this problem. Page num: %(i)d', i=3) | safe }}">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <img class="img-fluid rounded"
+                         src="{{ url_for('static', filename='uploads/books/'+book.title+'/4.jpg') }}"
+                         alt="{{ _('Hmm... This page is missing! Contact the admin to report this problem. Page num: %(i)d', i=4) | safe }}">
+                </div>
+                <div class="container">
+                    <br>
+                    <div class="jumbotron">
+                        <h1 class="display-4">{{ _('Register to Continue') }}</h1>
+                        <p class="lead">{{ _('Enjoying our comic book? Don\'t worry, just click the button below to register an account then come back to continue reading!') }}</p>
+                        <hr class="my-4">
+                        <a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}"
+                           role="button">{{ _('Register an account') }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

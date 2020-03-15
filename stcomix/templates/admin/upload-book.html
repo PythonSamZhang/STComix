@@ -1,0 +1,55 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}{{ _('Upload') }}{% endblock %}
+
+{% block content %}
+    <link href="{{ url_for('static', filename='dropzone/min/dropzone.min.css') }}" rel="stylesheet">
+    {{ dropzone.style('border: dotted') }}
+    <div class="container">
+        <h1 class="display-4">{{ _('Create a New Book') }}</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" class="needs-validation" novalidate>
+                    <input type="text" class="form-control" placeholder="{{ _('Title') }}" name="title"{% if value %}
+                           value="{{ value }}"{% endif %} required autofocus>
+                    <div class="invalid-feedback">{{ _('Please enter the book name.') }}</div>
+                    <br>
+                    <textarea type="text" class="form-control" placeholder="{{ _('Description') }}" name="des" required>{% if des %}
+                        {{ des }}{% endif %}</textarea>
+                    <div class="invalid-feedback">{{ _('Please enter the book description.') }}</div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">{{ _('Submit') }}</button>
+                </form>
+                <br>
+                <p class="text-muted">{{ _('Upload') }}
+                    <small>{{ _('Note: Please enter the book name first and then upload!') }}</small></p>
+                {{ dropzone.create(action='admin.new_book') }}<br>
+                <a class="btn btn-outline-success" href="{{ url_for('admin.book') }}">{{ _('Done') }}</a>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='dropzone/min/dropzone.min.js') }}"></script>
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict';
+                window.addEventListener('load', function () {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>
+    </div>
+    {{ dropzone.load_js() }}
+    {{ dropzone.config() }}
+{% endblock %}
