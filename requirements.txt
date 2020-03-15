@@ -2,6 +2,7 @@ alembic==1.4.1
 Babel==2.8.0
 Bootstrap-Flask==1.2.0
 Click==7.0
+dotenv-python==0.0.1
 Flask==1.1.1
 Flask-Avatars==0.2.2
 Flask-Babel==1.0.0

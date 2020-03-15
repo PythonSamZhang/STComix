@@ -32,7 +32,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/stcomix/templates/admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
@@ -84,7 +84,7 @@
       <workItem from="1583719964854" duration="19632000" />
       <workItem from="1583896016048" duration="13291000" />
       <workItem from="1584061918817" duration="465000" />
-      <workItem from="1584062597512" duration="45665000" />
+      <workItem from="1584062597512" duration="45999000" />
     </task>
     <servers />
   </component>
