@@ -1,5 +1,5 @@
 alembic==1.4.1
-Babel==2.8.0
+Babel==2.9.1
 Bootstrap-Flask==1.2.0
 Click==7.0
 dotenv-python==0.0.1
